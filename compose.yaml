@@ -1,0 +1,29 @@
+services:
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra-db
+    ports:
+      - "9042:9042"
+    volumes:
+      - ./scripts:/scripts
+    environment:
+      - CASSANDRA_START_RPC=true
+    networks:
+      - db-network
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./scripts:/scripts
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: testdb
+    networks:
+      - db-network
+
+networks:
+  db-network:
+    driver: bridge
