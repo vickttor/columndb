@@ -6,6 +6,7 @@ services:
       - "9042:9042"
     volumes:
       - ./scripts:/scripts
+    entrypoint: ["/scripts/entrypoint.sh"]
     environment:
       - CASSANDRA_START_RPC=true
     networks:

@@ -18,9 +18,19 @@ CREATE TABLE IF NOT EXISTS sales (
   sale_date TIMESTAMP,
   customer_id UUID,
   status TEXT,
-  PRIMARY KEY ((customer_id, product_name), quantity, price, sale_date, status, id) -- o que está depois dos parentes é a orderm das colunas.
+  PRIMARY KEY ((customer_id), product_name, quantity, price, sale_date, status, id) -- o que está depois dos parentes é a orderm das colunas.
 );
 
+
+CREATE MATERIALIZED VIEW sales_by_product_name_view AS
+SELECT * FROM sales WHERE product_name IS NOT NULL 
+AND quantity IS NOT NULL AND customer_id IS NOT NULL 
+AND status IS NOT NULL AND id IS NOT NULL 
+AND sale_date IS NOT NULL 
+AND price IS NOT NULL
+PRIMARY KEY ((product_name), customer_id, quantity, price, sale_date, status, id);
+
+CREATE INDEX ON sales (product_name);
 
 INSERT INTO customers (customer_id, name, email, address) VALUES (aa80c59b-0080-4bf4-96cc-4ba87764c94d, 'Customer 1', 'customer1@example.com', 'Address 1');
 INSERT INTO customers (customer_id, name, email, address) VALUES (43774f01-0970-46aa-940a-0b8fddd3f412, 'Customer 2', 'customer2@example.com', 'Address 2');

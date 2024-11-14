@@ -1,0 +1,14 @@
+enable_materialized_views: true
+
+commitlog_sync: periodic
+commitlog_sync_period_in_ms: 10000
+partitioner: org.apache.cassandra.dht.Murmur3Partitioner
+endpoint_snitch: SimpleSnitch
+listen_address: 0.0.0.0
+rpc_address: 0.0.0.0
+broadcast_rpc_address: cassandra-db
+
+seed_provider:
+  - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+    parameters:
+      - seeds: "127.0.0.1"
